@@ -34,6 +34,7 @@ if (typeof Object.create !== 'function') {
 			this.wrapper = $(element);
 			this.currentItemIndice = this.settings.currentItemIndice;
 			this.showLoader();
+			this.direction = 0;
 			this.locked = false;
 			if ((this.settings.fromJson !== false) && (typeof this.settings.fromJson == 'string')) {
 				$.getJSON(this.settings.fromJson, function (data) {
@@ -63,9 +64,13 @@ if (typeof Object.create !== 'function') {
 			this.dataContainer = $('<div/>', {
 				class: 'fsb-galery-data-container'
 			}).prependTo(this.wrapper);
+			/*
 			for (var i = 0; i < data.length; i++) {
 				this.addItem(i, data[i]);
 			}
+			*/
+			var firstItem = this.addItem(0, data[0]).addClass('active');
+
 			// Insert controls block into the DOM if user wants
 			if (this.settings.showControls) {
 				this.displayControls();
@@ -93,11 +98,12 @@ if (typeof Object.create !== 'function') {
 		addItem: function (indice, item) {
 			var src = item.folder + item.filename + item.extension,
 				item = $('<div/>', {
-					class: 'fsb-galery-data-item' + (indice == 0 ? ' active' : '')
+					class: 'fsb-galery-data-item'
 				}).html($('<img/>', {
 					src: src,
 					alt: item.description
 				})).appendTo(this.dataContainer);
+			return item;
 		},
 		displayControls: function () {
 			var self = this;
@@ -135,8 +141,13 @@ if (typeof Object.create !== 'function') {
 				this.addPin(i, this.data[i]);
 			}
 			$(this.navigationContainer).find('.fsb-galery-navigation-item').on('click', function (clickEvent) {
-				self.currentItemIndice = self.getIndice($(this).attr('data-slide'));
-				self.showItem();
+				if ((self.locked !== true) && ($(this).attr('data-slide') != self.currentItemIndice)) {
+					if (self.settings.animation == 'slide') {
+						self.direction = (self.currentItemIndice < $(this).attr('data-slide') ? -1 : 1);
+					}
+					self.currentItemIndice = self.getIndice($(this).attr('data-slide'));
+					self.showItem();
+				}
 				return false;
 			});
 		},
@@ -156,8 +167,13 @@ if (typeof Object.create !== 'function') {
 				this.addThumbnail(i, this.data[i]);
 			}
 			$(this.thumbnailsContainer).find('.fsb-galery-thumbnail-item').on('click', function (clickEvent) {
-				self.currentItemIndice = self.getIndice($(this).attr('data-slide'));
-				self.showItem();
+				if ((self.locked !== true) && ($(this).attr('data-slide') != self.currentItemIndice)) {
+					if (self.settings.animation == 'slide') {
+						self.direction = (self.currentItemIndice < $(this).attr('data-slide') ? -1 : 1);
+					}
+					self.currentItemIndice = self.getIndice($(this).attr('data-slide'));
+					self.showItem();
+				}
 				return false;
 			});
 		},
@@ -173,14 +189,22 @@ if (typeof Object.create !== 'function') {
 				})).appendTo(this.thumbnailsContainer);
 		},
 		showPreviousItem: function (clickEvent) {
-			this.currentItemIndice = this.getIndice(this.currentItemIndice - 1);
-			this.showItem();
-			return false;
+			if (this.locked !== true) {
+				this.currentItemIndice = this.getIndice(this.currentItemIndice - 1);
+				if (this.settings.animation == 'slide') {
+					this.direction = 1;
+				}
+				this.showItem();
+			}
 		},
 		showNextItem: function (clickEvent) {
-			this.currentItemIndice = this.getIndice(this.currentItemIndice + 1);
-			this.showItem();
-			return false;
+			if (this.locked !== true) {
+				this.currentItemIndice = this.getIndice(this.currentItemIndice + 1);
+				if (this.settings.animation == 'slide') {
+					this.direction = -1;
+				}
+				this.showItem();
+			}
 		},
 		showItem: function () {
 			var self = this,
@@ -188,40 +212,52 @@ if (typeof Object.create !== 'function') {
 				settings = this.settings,
 				currentItemIndice = this.currentItemIndice;
 
-			if (this.locked !== true) {
-				this.locked = true;
-				switch (this.settings.animation) {
-					case 'fade':
-						console.log('fade');
-						break;
-					case 'slide':
-						console.log('slide');
-						break;
-					default:
-						console.log('Ooohooo sorry, I do not have programmed this animation yet !');
-						break;
-				}
-				$(dataContainer).find('.fsb-galery-data-item.active').fadeOut(settings.animationSpeed, function () {
-					//self.showLoader();
-					$(this).removeClass('active');
-					$(self.navigationContainer).find('.fsb-galery-navigation-item.active').removeClass('active');
-					$(self.thumbnailsContainer).find('.fsb-galery-thumbnail-item.active').removeClass('active');
-					$(self.navigationContainer).find('.fsb-galery-navigation-item').eq(currentItemIndice).addClass('active');
-					$(self.thumbnailsContainer).find('.fsb-galery-thumbnail-item').eq(currentItemIndice).addClass('active');
-					$(dataContainer).find('.fsb-galery-data-item').eq(currentItemIndice).fadeIn(settings.animationSpeed, function () {
-						$(this).addClass('active');
-						self.locked = false;
-						//self.hideLoader();
+			this.locked = true;
+			switch (this.settings.animation) {
+				case 'fade':
+					var newItem = this.addItem(this.currentItemIndice, this.data[this.currentItemIndice]);
+					$(dataContainer).find('.fsb-galery-data-item.active').fadeOut(settings.animationSpeed, function () {
+						$(this).removeClass('active').remove();
+						$(self.navigationContainer).find('.fsb-galery-navigation-item.active').removeClass('active');
+						$(self.thumbnailsContainer).find('.fsb-galery-thumbnail-item.active').removeClass('active');
+						$(self.navigationContainer).find('.fsb-galery-navigation-item').eq(currentItemIndice).addClass('active');
+						$(self.thumbnailsContainer).find('.fsb-galery-thumbnail-item').eq(currentItemIndice).addClass('active');
+						newItem.fadeIn(settings.animationSpeed, function () {
+							$(this).addClass('active');
+							self.locked = false;
+						});
 					});
-				});
+					break;
+				case 'slide':
+					var currentItem = $(dataContainer).find('.fsb-galery-data-item.active'),
+						newItem = this.addItem(this.currentItemIndice, this.data[this.currentItemIndice])
+							.css('left', -self.direction * currentItem.width())
+							.css('position', 'absolute')
+							.css('height', currentItem.height())
+							.css('top', 0);
+
+					currentItem.animate({
+						left: self.direction * currentItem.width()
+					}, settings.animationSpeed, settings.animationEasing, function () {
+						$(this).removeClass('active').remove();
+					});
+					newItem.addClass('active').animate({
+						left: 0
+					}, settings.animationSpeed, settings.animationEasing, function () {
+						$(this).css('position', 'relative');
+						self.locked = false;
+					});
+					break;
+				default:
+					console.log('Ooohooo sorry, I do not have programmed this animation yet !');
+					break;
 			}
-			
 		},
 		getIndice: function (indice) {
 			if (indice < 0) {
-				if (indice < -this.data.length) {
+				//if (indice < -this.data.length) {
 					indice += this.data.length;
-				}
+				//}
 			} else if (indice > (this.data.length - 1)) {
 				indice = 0;
 			}
@@ -242,6 +278,7 @@ if (typeof Object.create !== 'function') {
 			// Animation config
 			animation: 'fade',
 			animationSpeed: 600,
+			animationEasing: 'linear',
 			// Controls config
 			showControls: true,
 			// Navigation config
