@@ -34,6 +34,12 @@
 }
 .fsb-galery .fsb-galery-controls a {
   display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  color: #f4f7fa;
+}
+.fsb-galery .fsb-galery-controls #fsb-galery-controls-previous,
+.fsb-galery .fsb-galery-controls #fsb-galery-controls-next {
   position: absolute;
   top: 50%;
   width: 40px;
@@ -42,27 +48,53 @@
   line-height: 30px;
   font-size: 60px;
   font-weight: 100;
-  text-decoration: none;
-  text-align: center;
   background: #313131;
-  color: #f4f7fa;
   opacity: 0.5;
   filter: alpha(opacity=50);
   border: 2px solid #f4f7fa;
   border-radius: 50%;
 }
-.fsb-galery .fsb-galery-controls a#fsb-galery-controls-previous {
+.fsb-galery .fsb-galery-controls #fsb-galery-controls-previous#fsb-galery-controls-previous,
+.fsb-galery .fsb-galery-controls #fsb-galery-controls-next#fsb-galery-controls-previous {
   left: 10px;
 }
-.fsb-galery .fsb-galery-controls a#fsb-galery-controls-next {
+.fsb-galery .fsb-galery-controls #fsb-galery-controls-previous#fsb-galery-controls-next,
+.fsb-galery .fsb-galery-controls #fsb-galery-controls-next#fsb-galery-controls-next {
   right: 10px;
 }
-.fsb-galery .fsb-galery-controls a:hover {
+.fsb-galery .fsb-galery-controls #fsb-galery-controls-previous:hover,
+.fsb-galery .fsb-galery-controls #fsb-galery-controls-next:hover {
   opacity: 0.85;
   filter: alpha(opacity=50);
 }
-.fsb-galery .fsb-galery-controls a:active {
+.fsb-galery .fsb-galery-controls #fsb-galery-controls-previous:active,
+.fsb-galery .fsb-galery-controls #fsb-galery-controls-next:active {
   opacity: 0.85;
+  filter: alpha(opacity=50);
+}
+.fsb-galery .fsb-galery-controls .fsb-galery-controls-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 25px;
+  background-color: #313131;
+  background-color: rgba(49, 49, 49, 0.5);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=[object Object],[object Object], endColorstr=[object Object],[object Object]);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=[object Object],[object Object], endColorstr=[object Object],[object Object])";
+}
+.fsb-galery .fsb-galery-controls .fsb-galery-controls-bar #fsb-galery-diaporama-link {
+  display: block;
+  width: 24px;
+  height: 12px;
+  margin: 6px 20px;
+  background: url('../images/icon-repeat.png');
+  background-size: cover;
+  opacity: 0.75;
+  filter: alpha(opacity=50);
+}
+.fsb-galery .fsb-galery-controls .fsb-galery-controls-bar #fsb-galery-diaporama-link.active {
+  opacity: 1;
   filter: alpha(opacity=50);
 }
 .fsb-galery .fsb-galery-navigation-wrapper {

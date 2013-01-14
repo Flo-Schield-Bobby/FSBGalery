@@ -94,6 +94,12 @@ if (typeof Object.create !== 'function') {
 			}
 			// And here we GO !
 			this.hideLoader();
+			var self = this;
+			if (this.diaporama) {
+				this.diaporamaTimeout = setTimeout(function () {
+					self.showNextItem();
+				}, this.settings.diaporamaPeriod);
+			}
 		},
 		addItem: function (indice, item) {
 			var src = item.folder + item.filename + item.extension,
@@ -111,6 +117,10 @@ if (typeof Object.create !== 'function') {
 			this.controlsContainer = $('<div/>', {
 				class: 'fsb-galery-controls'
 			}).appendTo(this.wrapper);
+			// Control bar
+			this.controlBar = $('<div/>', {
+				class: 'fsb-galery-controls-bar'
+			}).appendTo(this.controlsContainer);
 			// Previous arrow
 			this.previousLink = $('<a/>', {
 				href: '#',
@@ -121,6 +131,10 @@ if (typeof Object.create !== 'function') {
 				href: '#',
 				id: 'fsb-galery-controls-next'
 			}).html('&rsaquo;').appendTo(this.controlsContainer);
+			this.diaporamaLink = $('<a/>', {
+				href: '#',
+				id: 'fsb-galery-diaporama-link'
+			}).appendTo(this.controlBar);
 			// Bind click events
 			$(this.previousLink).on('click', function () {
 				self.showPreviousItem();
@@ -130,6 +144,18 @@ if (typeof Object.create !== 'function') {
 				self.showNextItem();
 				return false;
 			});
+			$(this.diaporamaLink).on('click', function () {
+				self.diaporama = !self.diaporama;
+				$(this).toggleClass('active');
+				if (self.diaporama !== true) {
+					window.clearTimeout(self.diaporamaTimeout);
+				} else {
+					self.diaporamaTimeout = setTimeout(function () {
+						self.showNextItem();
+					}, self.settings.diaporamaPeriod);
+				}
+				return false;
+			})
 		},
 		displayNavigation: function () {
 			var self = this;
@@ -225,7 +251,11 @@ if (typeof Object.create !== 'function') {
 						newItem.fadeIn(settings.animationSpeed, function () {
 							$(this).addClass('active');
 							self.locked = false;
-							setInterval(self.diaporamaPeriod, self.showNextItem);
+							if (self.diaporama) {
+								self.diaporamaTimeout = setTimeout(function () {
+									self.showNextItem();
+								}, self.settings.diaporamaPeriod);
+							}
 						});
 					});
 					break;
@@ -251,7 +281,12 @@ if (typeof Object.create !== 'function') {
 					}, settings.animationSpeed, settings.animationEasing, function () {
 						$(this).css('position', 'relative');
 						self.locked = false;
-						setInterval(self.diaporamaPeriod, self.showNextItem);
+						if (self.diaporama) {
+							self.diaporamaTimeout = setTimeout(function () {
+								self.showNextItem();
+							}, self.settings.diaporamaPeriod);
+						}
+						
 					});
 					break;
 				default:
