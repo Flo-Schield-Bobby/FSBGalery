@@ -6,7 +6,6 @@
  *
  * Dependencies:
  * - jQuery >= 1.7.2
- * - mustache >= ???
  *
  */
 
@@ -36,6 +35,7 @@ if (typeof Object.create !== 'function') {
 			this.showLoader();
 			this.direction = 0;
 			this.locked = false;
+			this.diaporama = config.autoplay;
 			if ((this.settings.fromJson !== false) && (typeof this.settings.fromJson == 'string')) {
 				$.getJSON(this.settings.fromJson, function (data) {
 					this.initWithData(data);
@@ -225,12 +225,13 @@ if (typeof Object.create !== 'function') {
 						newItem.fadeIn(settings.animationSpeed, function () {
 							$(this).addClass('active');
 							self.locked = false;
+							setInterval(self.diaporamaPeriod, self.showNextItem);
 						});
 					});
 					break;
 				case 'slide':
 					var currentItem = $(dataContainer).find('.fsb-galery-data-item.active'),
-						newItem = this.addItem(this.currentItemIndice, this.data[this.currentItemIndice])
+						newItem = this.addItem(currentItemIndice, this.data[currentItemIndice])
 							.css('left', -self.direction * currentItem.width())
 							.css('position', 'absolute')
 							.css('height', currentItem.height())
@@ -240,12 +241,17 @@ if (typeof Object.create !== 'function') {
 						left: self.direction * currentItem.width()
 					}, settings.animationSpeed, settings.animationEasing, function () {
 						$(this).removeClass('active').remove();
+						$(self.navigationContainer).find('.fsb-galery-navigation-item.active').removeClass('active');
+						$(self.thumbnailsContainer).find('.fsb-galery-thumbnail-item.active').removeClass('active');
+						$(self.navigationContainer).find('.fsb-galery-navigation-item').eq(currentItemIndice).addClass('active');
+						$(self.thumbnailsContainer).find('.fsb-galery-thumbnail-item').eq(currentItemIndice).addClass('active');						
 					});
 					newItem.addClass('active').animate({
 						left: 0
 					}, settings.animationSpeed, settings.animationEasing, function () {
 						$(this).css('position', 'relative');
 						self.locked = false;
+						setInterval(self.diaporamaPeriod, self.showNextItem);
 					});
 					break;
 				default:
@@ -285,7 +291,10 @@ if (typeof Object.create !== 'function') {
 			showNavigation: true,
 			// Thumbnails config
 			showThumbnails: true,
-			thumbnailsDirectory: ''
+			thumbnailsDirectory: '',
+			// Diaporama config
+			autoplay: false,
+			diaporamaPeriod: 4000,
 		}
 		if (this.length) {
 			return this.each ( function () {
