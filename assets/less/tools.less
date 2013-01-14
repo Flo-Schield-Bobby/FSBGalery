@@ -1,0 +1,16 @@
+.size(@width, @height) {
+	width: @width;
+	height: @height;
+}
+
+.opacity(@opacity: 100) {
+	opacity: @opacity/100;
+	filter: alpha(opacity=@opacity);
+}
+
+.backgroundRGBA(@red, @green, @blue, @alpha, @oldNotation: #7f313131) {
+	background-color: rgb(@red, @green, @blue);
+	background-color: rgba(@red, @green, @blue, @alpha);
+	filter: ~"progid:DXImageTransform.Microsoft.gradient(startColorstr=@{oldNotation}, endColorstr=@{oldNotation})";
+	-ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=@{oldNotation}, endColorstr=@{oldNotation})";
+}

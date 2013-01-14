@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>FSBGalery jQuery Plugin</title>
+		<meta http-equiv='Content-Type' content='text/html; charset=utf-8' />
+		<meta name='keywords' content='FSBGalery; Image; Picture; Galery; Image Galery; Free Galery' />
+		<meta name='description' content='' />
+		<link rel='stylesheet' type='text/css' media='screen' href='assets/css/app.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='assets/css/fsb-galery.css' />
+	</head>
+	<body>
+		<header>
+			<h1>FSBGalery jQuery Plugin</h1>
+			<h2>2013 © Florent SCHILDKNECHT</h2>
+		</header>
+		<aside id='wrapper'>
+			<section id='fsb-galery-wrapper' class='fsb-galery'></section>
+		</aside>
+		<script type='text/javascript' src='assets/js/jquery-1.8.3.min.js'></script>
+		<script type='text/javascript' src='assets/js/fsb-galery-1.0.0.js'></script>
+		<script type='text/javascript'>
+			$('#fsb-galery-wrapper').FSBGalery({
+				//fromJson: 'data/pictures.json',
+				data: [
+					{
+						folder: 'data/',
+						filename: 'iceberg',
+						extension: '.jpg',
+						description: 'Iceberg'
+					},
+					{
+						folder: 'data/',
+						filename: 'sahara',
+						extension: '.jpg',
+						description: 'Sahara'
+					},
+					{
+						folder: 'data/',
+						filename: 'mountain',
+						extension: '.jpg',
+						description: 'Mountain'
+					},
+					{
+						folder: 'data/',
+						filename: 'fjord',
+						extension: '.jpg',
+						description: 'Fjord'
+					},
+					{
+						folder: 'data/',
+						filename: 'japan-house',
+						extension: '.jpg',
+						description: 'Japanese House'
+					}
+				],
+				animation: 'fade',
+				animationSpeed: 600,
+				showControls: true,
+				showNavigation: false,
+				showThumbnails: true,
+				thumbnailsDirectory: 'data/thumbnails/'
+			});
+		</script>
+	</body>
+</html>

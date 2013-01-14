@@ -1,0 +1,146 @@
+.fsb-galery {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  position: relative;
+  width: 60%;
+  height: auto;
+  max-width: 1200px;
+  margin: auto;
+}
+.fsb-galery .fsb-galery-data-container {
+  position: relative;
+  width: 100%;
+  overflow: auto;
+}
+.fsb-galery .fsb-galery-data-container .fsb-galery-data-item {
+  position: relative;
+  display: none;
+  width: 100%;
+}
+.fsb-galery .fsb-galery-data-container .fsb-galery-data-item.active {
+  display: block;
+  left: 0;
+}
+.fsb-galery .fsb-galery-data-container .fsb-galery-data-item img {
+  display: block;
+  max-width: 100%;
+  line-height: 1;
+}
+.fsb-galery .fsb-galery-controls {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+.fsb-galery .fsb-galery-controls a {
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  width: 40px;
+  height: 40px;
+  margin: -22px auto 0 auto;
+  line-height: 30px;
+  font-size: 60px;
+  font-weight: 100;
+  text-decoration: none;
+  text-align: center;
+  background: #313131;
+  color: #f4f7fa;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+  border: 2px solid #f4f7fa;
+  border-radius: 50%;
+}
+.fsb-galery .fsb-galery-controls a#fsb-galery-controls-previous {
+  left: 10px;
+}
+.fsb-galery .fsb-galery-controls a#fsb-galery-controls-next {
+  right: 10px;
+}
+.fsb-galery .fsb-galery-controls a:hover {
+  opacity: 0.85;
+  filter: alpha(opacity=50);
+}
+.fsb-galery .fsb-galery-controls a:active {
+  opacity: 0.85;
+  filter: alpha(opacity=50);
+}
+.fsb-galery .fsb-galery-navigation-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+}
+.fsb-galery .fsb-galery-navigation-wrapper .fsb-galery-navigation {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 25px;
+  text-align: center;
+  background-color: #313131;
+  background-color: rgba(49, 49, 49, 0.5);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=[object Object],[object Object], endColorstr=[object Object],[object Object]);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=[object Object],[object Object], endColorstr=[object Object],[object Object])";
+}
+.fsb-galery .fsb-galery-navigation-wrapper .fsb-galery-navigation .fsb-galery-navigation-item {
+  display: inline-block;
+  width: 20px;
+  color: #f4f7fa;
+  font-size: 18px;
+  text-decoration: none;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+.fsb-galery .fsb-galery-navigation-wrapper .fsb-galery-navigation .fsb-galery-navigation-item:hover,
+.fsb-galery .fsb-galery-navigation-wrapper .fsb-galery-navigation .fsb-galery-navigation-item.active {
+  opacity: 1;
+  filter: alpha(opacity=50);
+}
+.fsb-galery .fsb-galery-navigation-wrapper .fsb-galery-thumbnails {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #313131;
+  background-color: rgba(49, 49, 49, 0.5);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=[object Object],[object Object], endColorstr=[object Object],[object Object]);
+  -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=[object Object],[object Object], endColorstr=[object Object],[object Object])";
+}
+.fsb-galery .fsb-galery-navigation-wrapper .fsb-galery-thumbnails .fsb-galery-thumbnail-item {
+  display: inline-block;
+  height: 50px;
+  margin: auto 5px;
+  line-height: 50px;
+  opacity: 0.5;
+  filter: alpha(opacity=50);
+}
+.fsb-galery .fsb-galery-navigation-wrapper .fsb-galery-thumbnails .fsb-galery-thumbnail-item:hover,
+.fsb-galery .fsb-galery-navigation-wrapper .fsb-galery-thumbnails .fsb-galery-thumbnail-item.active {
+  opacity: 1;
+  filter: alpha(opacity=50);
+}
+.fsb-galery .fsb-galery-navigation-wrapper .fsb-galery-thumbnails .fsb-galery-thumbnail-item img {
+  max-width: 50px;
+  max-height: 50px;
+  vertical-align: middle;
+}
+.fsb-galery .fsb-galery-loader-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000000;
+  opacity: 0.8;
+  filter: alpha(opacity=50);
+}
+.fsb-galery .fsb-galery-loader-container .fsb-loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100px;
+  height: 100px;
+  margin: -50px 0 0 -50px;
+}

@@ -1,0 +1,32 @@
+[
+	{
+		"folder": "data/",
+		"filename": "iceberg",
+		"extension": ".jpg",
+		"description": "Iceberg"
+	},
+	{
+		"folder": "data/",
+		"filename": "sahara",
+		"extension": ".jpg",
+		"description": "Sahara"
+	},
+	{
+		"folder": "data/",
+		"filename": "mountain",
+		"extension": ".jpg",
+		"description": "Mountain"
+	},
+	{
+		"folder": "data/",
+		"filename": "iceberg",
+		"extension": ".jpg",
+		"description": "Fjord"
+	},
+	{
+		"folder": "data/",
+		"filename": "japan-house",
+		"extension": ".jpg",
+		"description": "Japanese House"
+	}
+]
