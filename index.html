@@ -6,7 +6,7 @@
 		<meta name='keywords' content='FSBGalery; Image; Picture; Galery; Image Galery; Free Galery' />
 		<meta name='description' content='' />
 		<link rel='stylesheet' type='text/css' media='screen' href='assets/css/app.css' />
-		<link rel='stylesheet' type='text/css' media='screen' href='assets/css/fsb-galery.css' />
+		<link rel='stylesheet' type='text/css' media='screen' href='assets/css/fsb-galery-1.0.0.css' />
 	</head>
 	<body>
 		<header>
@@ -14,31 +14,42 @@
 			<h2>2013 © Florent SCHILDKNECHT</h2>
 		</header>
 		<aside id='wrapper'>
-			<h2>Getting Started</h2>
-			<section id='fsb-galery-documentation'>
-				<h3>1 - Download the librairies and stylesheets</h3>
-				<p>jQuery >= 1.8.3 and FSBGalery</p>
-				<h3>2 - Define a wrapper</h3>
-				<p>Give it any jQuery selector of your choice</p>
-				<h3>3 - Insert the scrips</h3>
-				<p>The librairies and an initializer script</p>
-				<h3>4 - Configurate your galery</h3>
-				<p>Add the link of fsbgalery.css stylesheet, or feel free to integrate it yourself :)</p>
+			<div class='container'>
+				<h2>Getting Started</h2>
+				<div class='row-fluid'>
+					<div class='span5'>
+						<section id='fsb-galery-documentation'>
+							<h3>1 - Download the librairies and stylesheets</h3>
+							<p><a href='http://jquery.com/' target='_blank'>jQuery >= 1.8.3</a> and <a href='download.php' target='_blank'>FSBGalery</a></p>
+							<h3>2 - Define a wrapper</h3>
 <pre>
-	&lt;section id='fsb-galery-wrapper'&gt;&lt;/section&gt;
+&lt;section id='fsb-galery-wrapper'&gt;&lt;/section&gt;
 </pre>
+							<p>Give it any jQuery selector of your choice</p>
+							<h3>3 - Insert the scrips</h3>
+							<p>The librairies and an initializer script</p>
 <pre>
-	<!-- Insert jQuery library and the plugin source code -->
-	&lt;script type='text/javascript' src='assets/js/jquery-1.8.3.min.js'&gt;&lt;/script&gt;
-	&lt;script type='text/javascript' src='assets/js/fsb-galery-1.0.0.js'&gt;&lt;/script&gt;
-	&lt;script type='text/javascript'&gt;
-		$('#fsb-galery-wrapper').FSBGalery({
-			// Choose your plugin configuration here
-		});
-	&lt;/script&gt;
+<!-- Insert jQuery library and the plugin source code -->
+&lt;script type='text/javascript' src='assets/js/jquery-1.8.3.min.js'&gt;&lt;/script&gt;
+&lt;script type='text/javascript' src='assets/js/fsb-galery-1.0.0.js'&gt;&lt;/script&gt;
+&lt;script type='text/javascript'&gt;
+	$('#fsb-galery-wrapper').FSBGalery({
+		// Choose your plugin configuration here
+	});
+&lt;/script&gt;
 </pre>
-			</section>
-			<section id='fsb-galery-wrapper' class='fsb-galery'></section>
+							<h3>4 - Design your galery</h3>
+							<p>Add the link of fsbgalery.css stylesheet, or feel free to integrate it yourself :)</p>
+<pre>
+&lt;link rel='stylesheet' type='text/css' media='screen' href='assets/css/fsb-galery-1.0.0.css' /&gt;
+</pre>
+						</section>
+					</div>
+					<div class='span7'>
+						<section id='fsb-galery-wrapper' class='fsb-galery'></section>
+					</div>
+				</div>
+			</div>
 		</aside>
 		<script type='text/javascript' src='assets/js/jquery-1.8.3.min.js'></script>
 		<script type='text/javascript' src='assets/js/fsb-galery-1.0.0.js'></script>

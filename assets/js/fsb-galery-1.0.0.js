@@ -64,12 +64,25 @@ if (typeof Object.create !== 'function') {
 			this.dataContainer = $('<div/>', {
 				class: 'fsb-galery-data-container'
 			}).prependTo(this.wrapper);
-			/*
-			for (var i = 0; i < data.length; i++) {
-				this.addItem(i, data[i]);
-			}
-			*/
+
 			var firstItem = this.addItem(0, data[0]).addClass('active');
+
+			// Title and description if user wants
+			if (this.settings.showTitle || this.settings.showDescription) {
+				this.informationsWrapper = $('<div/>', {
+					class: 'fsb-galery-informations'
+				}).appendTo(this.wrapper);
+				if (this.settings.showTitle) {
+					this.titleContainer = $('<div/>', {
+						class: 'fsb-galery-informations-title'
+					}).html(data[0].filename).appendTo(this.informationsWrapper);
+				}
+				if (this.settings.showDescription) {
+					this.descriptionContainer = $('<div/>', {
+						class: 'fsb-galery-informations-description'
+					}).html(data[0].description).appendTo(this.informationsWrapper);
+				}
+			}
 
 			// Insert controls block into the DOM if user wants
 			if (this.settings.showControls) {
@@ -101,13 +114,13 @@ if (typeof Object.create !== 'function') {
 				}, this.settings.diaporamaPeriod);
 			}
 		},
-		addItem: function (indice, item) {
-			var src = item.folder + item.filename + item.extension,
+		addItem: function (indice, itemData) {
+			var src = itemData.folder + itemData.filename + itemData.extension,
 				item = $('<div/>', {
 					class: 'fsb-galery-data-item'
 				}).html($('<img/>', {
 					src: src,
-					alt: item.description
+					alt: itemData.description
 				})).appendTo(this.dataContainer);
 			return item;
 		},
@@ -293,6 +306,19 @@ if (typeof Object.create !== 'function') {
 					console.log('Ooohooo sorry, I do not have programmed this animation yet !');
 					break;
 			}
+			// Title and description
+			var item = this.data[this.currentItemIndice],
+				self = this;
+			if (this.settings.showTitle) {
+				this.titleContainer.fadeOut(this.settings.animationSpeed, function () {
+					$(this).empty().html(item.filename).fadeIn(self.settings.animationSpeed);
+				});
+			}
+			if (this.settings.showDescription) {
+				this.descriptionContainer.fadeOut(this.settings.animationSpeed, function () {
+					$(this).empty().html(item.description).fadeIn(self.settings.animationSpeed);
+				})
+			}
 		},
 		getIndice: function (indice) {
 			if (indice < 0) {
@@ -330,6 +356,9 @@ if (typeof Object.create !== 'function') {
 			// Diaporama config
 			autoplay: false,
 			diaporamaPeriod: 4000,
+			// Title and Description
+			showTitle: true,
+			showDescription: true
 		}
 		if (this.length) {
 			return this.each ( function () {
