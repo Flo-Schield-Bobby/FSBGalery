@@ -344,7 +344,7 @@ if (typeof Object.create !== 'function') {
 		},
 		updateCounter: function () {
 			if (this.settings.showControlsBar) {
-				this.counter.currentItem.html(this.currentItemIndice + 1);
+				this.counter.currentItem.html(parseInt(this.currentItemIndice) + 1);
 			}
 		},
 		getIndice: function (indice) {
