@@ -171,25 +171,36 @@ if (typeof Object.create !== 'function') {
 			})).prependTo(this.controlsBar);
 			// Bind click events
 			$(this.previousLink).on('click', function () {
+				self.stopDiaporama();
 				self.showPreviousItem();
 				return false;
 			});
 			$(this.nextLink).on('click', function () {
+				self.stopDiaporama();
 				self.showNextItem();
 				return false;
 			});
 			$(this.diaporamaLink).on('click', function () {
-				self.diaporama = !self.diaporama;
-				$(this).toggleClass('active');
-				if (self.diaporama !== true) {
-					window.clearTimeout(self.diaporamaTimeout);
+				if (self.diaporama) {
+					self.stopDiaporama();
 				} else {
-					self.diaporamaTimeout = setTimeout(function () {
-						self.showNextItem();
-					}, self.settings.diaporamaPeriod);
+					self.startDiaporama();
 				}
 				return false;
 			})
+		},
+		startDiaporama: function () {
+			var self = this;
+			this.diaporama = true;
+			this.diaporamaLink.addClass('active');
+			this.diaporamaTimeout = setTimeout(function () {
+				self.showNextItem();
+			}, self.settings.diaporamaPeriod);
+		},
+		stopDiaporama: function () {
+			this.diaporamaLink.removeClass('active');
+			this.diaporama = false;
+			window.clearTimeout(this.diaporamaTimeout);
 		},
 		displayNavigation: function () {
 			var self = this;
@@ -201,6 +212,7 @@ if (typeof Object.create !== 'function') {
 				this.addPin(i, this.data[i]);
 			}
 			$(this.navigationContainer).find('.fsb-galery-navigation-item').on('click', function (clickEvent) {
+				self.stopDiaporama();
 				if ((self.locked !== true) && ($(this).attr('data-slide') != self.currentItemIndice)) {
 					if (self.settings.animation == 'slide') {
 						self.direction = (self.currentItemIndice < $(this).attr('data-slide') ? -1 : 1);
@@ -227,8 +239,8 @@ if (typeof Object.create !== 'function') {
 				this.addThumbnail(i, this.data[i]);
 			}
 			$(this.thumbnailsContainer).find('.fsb-galery-thumbnail-item').on('click', function (clickEvent) {
+				self.stopDiaporama();
 				if ((self.locked !== true) && ($(this).attr('data-slide') != self.currentItemIndice)) {
-					self.diaporama = false;
 					if (self.settings.animation == 'slide') {
 						self.direction = (self.currentItemIndice < $(this).attr('data-slide') ? -1 : 1);
 					}
@@ -251,7 +263,6 @@ if (typeof Object.create !== 'function') {
 		},
 		showPreviousItem: function (clickEvent) {
 			if (this.locked !== true) {
-				this.diaporama = false;
 				this.currentItemIndice = this.getIndice(this.currentItemIndice - 1);
 				if (this.settings.animation == 'slide') {
 					this.direction = 1;
@@ -261,7 +272,6 @@ if (typeof Object.create !== 'function') {
 		},
 		showNextItem: function (clickEvent) {
 			if (this.locked !== true) {
-				this.diaporama = false;
 				this.currentItemIndice = this.getIndice(this.currentItemIndice + 1);
 				if (this.settings.animation == 'slide') {
 					this.direction = -1;
@@ -302,8 +312,8 @@ if (typeof Object.create !== 'function') {
 						newItem = this.addItem(currentItemIndice, this.data[currentItemIndice])
 							.css('left', -self.direction * currentItem.width())
 							.css('position', 'absolute')
-							.css('top', 0)
-							.css('height', currentItem.height());
+							.css('top', 0);
+							//.css('height', currentItem.height());
 
 					currentItem.animate({
 						left: self.direction * currentItem.width()
