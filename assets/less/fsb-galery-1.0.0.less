@@ -72,15 +72,26 @@
 			height: 25px;
 			.backgroundRGBA(49, 49, 49, 0.5, #7f313131);
 			#fsb-galery-diaporama-link {
-				display: block;
-				width: 24px;
-				height: 12px;
-				margin: 6px 20px;
-				background: url('../images/icon-repeat.png');
-				background-size: cover;
+				display: inline-block;
+				min-width: 50px;
+				height: 100%;
 				.opacity(75);
 				&.active {
 					.opacity(100);
+				}
+				img {
+					width: 100%;
+					max-width: 24px;
+					vertical-align: sub;
+				}
+			}
+			.fsb-galery-counter {
+				display: inline-block;
+				min-width: 50px;
+				height: 100%;
+				span {
+					vertical-align: middle;
+					color: rgb(244, 247, 250);
 				}
 			}
 		}

@@ -85,18 +85,29 @@
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=[object Object],[object Object], endColorstr=[object Object],[object Object])";
 }
 .fsb-galery .fsb-galery-controls .fsb-galery-controls-bar #fsb-galery-diaporama-link {
-  display: block;
-  width: 24px;
-  height: 12px;
-  margin: 6px 20px;
-  background: url('../images/icon-repeat.png');
-  background-size: cover;
+  display: inline-block;
+  min-width: 50px;
+  height: 100%;
   opacity: 0.75;
   filter: alpha(opacity=50);
 }
 .fsb-galery .fsb-galery-controls .fsb-galery-controls-bar #fsb-galery-diaporama-link.active {
   opacity: 1;
   filter: alpha(opacity=50);
+}
+.fsb-galery .fsb-galery-controls .fsb-galery-controls-bar #fsb-galery-diaporama-link img {
+  width: 100%;
+  max-width: 24px;
+  vertical-align: sub;
+}
+.fsb-galery .fsb-galery-controls .fsb-galery-controls-bar .fsb-galery-counter {
+  display: inline-block;
+  min-width: 50px;
+  height: 100%;
+}
+.fsb-galery .fsb-galery-controls .fsb-galery-controls-bar .fsb-galery-counter span {
+  vertical-align: middle;
+  color: #f4f7fa;
 }
 .fsb-galery .fsb-galery-navigation-wrapper {
   position: absolute;

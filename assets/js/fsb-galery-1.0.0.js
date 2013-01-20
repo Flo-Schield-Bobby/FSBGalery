@@ -10,7 +10,7 @@
  */
 
 // JavaScript non-bloquant debuging
-function debug (error) {
+function debug(error) {
 	if (console && console.log) {
 		console.log('DEBUG', error);
 	} else {
@@ -27,6 +27,7 @@ if (typeof Object.create !== 'function') {
     };
 }
 (function ($) {
+	'use strict';
 	var FSBGalery = {
 		init: function (element, config) {
 			this.settings = config;
@@ -45,6 +46,7 @@ if (typeof Object.create !== 'function') {
 			} else {
 				debug('Hum, there is currently no data to manage.');
 			}
+			return this;
 		},
 		showLoader: function () {
 			var loader = $('<figure/>', {
@@ -132,9 +134,23 @@ if (typeof Object.create !== 'function') {
 			}).appendTo(this.wrapper);
 			// Control bar
 			if (this.settings.showControlsBar) {
-				this.controlBar = $('<div/>', {
+				this.controlsBar = $('<div/>', {
 					class: 'fsb-galery-controls-bar'
 				}).appendTo(this.controlsContainer);
+				if (this.settings.counter) {
+					this.counter = $('<div/>', {
+						class: 'fsb-galery-counter'
+					}).appendTo(self.controlsBar);
+					this.counter.currentItem = $('<span/>', {
+						class: 'fsb-galery-counter-current'
+					}).html(self.currentItemIndice + 1).appendTo(this.counter);
+					this.counter.separator = $('<span/>', {
+						class: 'fsb-galery-counter-separator'
+					}).html('/').appendTo(this.counter);
+					this.counter.totalItems = $('<span/>', {
+						class: 'fsb-galery-counter-total'
+					}).html(self.data.length).appendTo(this.counter);
+				}
 			}
 			// Previous arrow
 			this.previousLink = $('<a/>', {
@@ -149,7 +165,10 @@ if (typeof Object.create !== 'function') {
 			this.diaporamaLink = $('<a/>', {
 				href: '#',
 				id: 'fsb-galery-diaporama-link'
-			}).appendTo(this.controlBar);
+			}).append($('<img/>', {
+				src: 'assets/images/icon-repeat.png',
+				alt: 'Autoplay Icon'
+			})).prependTo(this.controlsBar);
 			// Bind click events
 			$(this.previousLink).on('click', function () {
 				self.showPreviousItem();
@@ -253,6 +272,7 @@ if (typeof Object.create !== 'function') {
 				settings = this.settings,
 				currentItemIndice = this.currentItemIndice;
 
+			this.updateCounter();
 			this.locked = true;
 			switch (this.settings.animation) {
 				case 'fade':
@@ -322,11 +342,14 @@ if (typeof Object.create !== 'function') {
 				})
 			}
 		},
+		updateCounter: function () {
+			if (this.settings.showControlsBar) {
+				this.counter.currentItem.html(this.currentItemIndice + 1);
+			}
+		},
 		getIndice: function (indice) {
 			if (indice < 0) {
-				//if (indice < -this.data.length) {
-					indice += this.data.length;
-				//}
+				indice += this.data.length;
 			} else if (indice > (this.data.length - 1)) {
 				indice = 0;
 			}
@@ -359,14 +382,14 @@ if (typeof Object.create !== 'function') {
 			// Diaporama config
 			autoplay: false,
 			diaporamaPeriod: 4000,
+			counter: true,
 			// Title and Description
 			showTitle: true,
 			showDescription: true
 		}
 		if (this.length) {
 			return this.each ( function () {
-				var Galery = Object.create(FSBGalery);
-				Galery.init(this, $.extend(defaults, config));
+				var Galery = Object.create(FSBGalery).init(this, $.extend(defaults, config));
 			});
 		}
 	}
