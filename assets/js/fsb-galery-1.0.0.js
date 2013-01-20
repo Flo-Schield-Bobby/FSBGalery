@@ -131,9 +131,11 @@ if (typeof Object.create !== 'function') {
 				class: 'fsb-galery-controls'
 			}).appendTo(this.wrapper);
 			// Control bar
-			this.controlBar = $('<div/>', {
-				class: 'fsb-galery-controls-bar'
-			}).appendTo(this.controlsContainer);
+			if (this.settings.showControlsBar) {
+				this.controlBar = $('<div/>', {
+					class: 'fsb-galery-controls-bar'
+				}).appendTo(this.controlsContainer);
+			}
 			// Previous arrow
 			this.previousLink = $('<a/>', {
 				href: '#',
@@ -348,6 +350,7 @@ if (typeof Object.create !== 'function') {
 			animationEasing: 'linear',
 			// Controls config
 			showControls: true,
+			showControlsBar: true,
 			// Navigation config
 			showNavigation: true,
 			// Thumbnails config
