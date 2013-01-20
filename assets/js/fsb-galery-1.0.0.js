@@ -228,6 +228,7 @@ if (typeof Object.create !== 'function') {
 			}
 			$(this.thumbnailsContainer).find('.fsb-galery-thumbnail-item').on('click', function (clickEvent) {
 				if ((self.locked !== true) && ($(this).attr('data-slide') != self.currentItemIndice)) {
+					self.diaporama = false;
 					if (self.settings.animation == 'slide') {
 						self.direction = (self.currentItemIndice < $(this).attr('data-slide') ? -1 : 1);
 					}
@@ -250,6 +251,7 @@ if (typeof Object.create !== 'function') {
 		},
 		showPreviousItem: function (clickEvent) {
 			if (this.locked !== true) {
+				this.diaporama = false;
 				this.currentItemIndice = this.getIndice(this.currentItemIndice - 1);
 				if (this.settings.animation == 'slide') {
 					this.direction = 1;
@@ -259,6 +261,7 @@ if (typeof Object.create !== 'function') {
 		},
 		showNextItem: function (clickEvent) {
 			if (this.locked !== true) {
+				this.diaporama = false;
 				this.currentItemIndice = this.getIndice(this.currentItemIndice + 1);
 				if (this.settings.animation == 'slide') {
 					this.direction = -1;
@@ -299,8 +302,8 @@ if (typeof Object.create !== 'function') {
 						newItem = this.addItem(currentItemIndice, this.data[currentItemIndice])
 							.css('left', -self.direction * currentItem.width())
 							.css('position', 'absolute')
-							.css('height', currentItem.height())
-							.css('top', 0);
+							.css('top', 0)
+							.css('height', currentItem.height());
 
 					currentItem.animate({
 						left: self.direction * currentItem.width()
@@ -322,6 +325,24 @@ if (typeof Object.create !== 'function') {
 							}, self.settings.diaporamaPeriod);
 						}
 						
+					});
+					break;
+				case 'crossfade':
+					var self = this,
+						currentItem = $(dataContainer).find('.fsb-galery-data-item.active').css('z-index', -1),
+						newItem = this.addItem(this.currentItemIndice, this.data[this.currentItemIndice])
+							.css('position', 'absolute')
+							.css('top', 0);
+
+					newItem.fadeIn(self.settings.animationSpeed, function () {
+						$(this).css('position', 'relative').addClass('active');
+						currentItem.remove();
+						self.locked = false;
+						if (self.diaporama) {
+							self.diaporamaTimeout = setTimeout(function () {
+								self.showNextItem();
+							}, self.settings.diaporamaPeriod);
+						}
 					});
 					break;
 				default:
