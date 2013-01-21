@@ -289,8 +289,7 @@ if (typeof Object.create !== 'function') {
 					'data-slide': indice
 				}).appendTo(this.thumbnailsContainer),
 				thumbnailContent;
-
-			console.log(this);
+			
 			switch (item.element) {
 				case 'image':
 					thumbnailContent = $('<img/>', {
