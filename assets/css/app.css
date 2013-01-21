@@ -997,3 +997,17 @@ html body a:hover {
   color: #005580;
   text-decoration: underline;
 }
+#test-block {
+  height: 400px;
+  padding: 20px 0;
+  background: #787d82;
+}
+#test-block h3 {
+  padding: 10px 0 0 0;
+}
+#test-block p {
+  margin: 20% 0 0 0;
+}
+.center {
+  text-align: center;
+}
