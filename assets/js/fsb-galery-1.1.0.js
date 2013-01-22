@@ -118,7 +118,8 @@ if (typeof Object.create !== 'function') {
 			}
 		},
 		addItem: function (indice, itemData) {
-			var item = $('<div/>', {
+			var self = this,
+				item = $('<div/>', {
 					class: 'fsb-galery-data-item'
 				}).appendTo(this.dataContainer),
 				itemContent;
@@ -131,6 +132,11 @@ if (typeof Object.create !== 'function') {
 						src: itemData.folder + itemData.filename + itemData.extension,
 						alt: itemData.description
 					});
+					if (this.settings.bindItems) {
+						itemContent.on('click', function (clickEvent) {
+							self.showNextItem();
+						});
+					}
 					break;
 				case 'video':
 					itemContent = $('<video/>', {
@@ -150,6 +156,11 @@ if (typeof Object.create !== 'function') {
 						id: itemData.id,
 						class: itemData.class
 					}).html(itemData.content);
+					if (this.settings.bindItems) {
+						itemContent.on('click', function (clickEvent) {
+							self.showNextItem();
+						});
+					}
 					break;
 				default:
 					break;
@@ -163,7 +174,7 @@ if (typeof Object.create !== 'function') {
 			// Container
 			this.controlsContainer = $('<div/>', {
 				class: 'fsb-galery-controls'
-			}).appendTo(this.wrapper);
+			}).prependTo(this.wrapper);
 			// Control bar
 			if (this.settings.showControlsBar) {
 				this.controlsBar = $('<div/>', {
@@ -466,6 +477,8 @@ if (typeof Object.create !== 'function') {
 			// Controls config
 			showControls: true,
 			showControlsBar: true,
+			// Bind click on items
+			bindItems: true,
 			// Navigation config
 			showNavigation: true,
 			// Thumbnails config

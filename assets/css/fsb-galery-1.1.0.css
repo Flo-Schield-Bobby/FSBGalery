@@ -37,6 +37,7 @@
   text-decoration: none;
   text-align: center;
   color: #f4f7fa;
+  z-index: 10;
 }
 .fsb-galery .fsb-galery-controls #fsb-galery-controls-previous,
 .fsb-galery .fsb-galery-controls #fsb-galery-controls-next {
@@ -83,6 +84,7 @@
   background-color: rgba(49, 49, 49, 0.5);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr=[object Object],[object Object], endColorstr=[object Object],[object Object]);
   -ms-filter: "progid:DXImageTransform.Microsoft.gradient(startColorstr=[object Object],[object Object], endColorstr=[object Object],[object Object])";
+  z-index: 10;
 }
 .fsb-galery .fsb-galery-controls .fsb-galery-controls-bar #fsb-galery-diaporama-link {
   display: inline-block;
@@ -114,6 +116,7 @@
   bottom: 0;
   left: 0;
   width: 100%;
+  z-index: 10;
 }
 .fsb-galery .fsb-galery-navigation-wrapper .fsb-galery-navigation {
   position: absolute;
